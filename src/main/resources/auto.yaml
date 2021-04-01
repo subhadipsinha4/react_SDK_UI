@@ -1,0 +1,36 @@
+---
+applicationUrl: https://auto-test-fsd.unbxd.io:32772
+
+services:
+- name: solr
+  url: http://auto-test-fsd.unbxd.io:8900
+- name: brewersearch
+  url: http://auto-test-fsd.unbxd.io:8901
+- name: groot
+  url: http://auto-test-fsd.unbxd.io:8903
+- name: gimli
+  url: http://auto-test-fsd.unbxd.io:8904
+- name: asterix
+  url: http://auto-test-fsd.unbxd.io:6339
+- name: feed
+  url: http://auto-test-fsd.unbxd.io:8902
+- name: ether
+  url: http://auto-test-fsd.unbxd.io:2205
+- name: mysql
+  url: auto-test-fsd.unbxd.io:3306
+
+sites:
+- siteKey: test-com80011528205005
+  apiKey:  3bd7af164e5109b5a6b1dfb97bdfdad2
+  secretKey: bd73021f4ff9183a055c71263600de94
+  siteId: 9
+  id: 1
+- siteKey: auto-fsd-111550816896
+  apiKey: d2cef08783c332f944924789f7074c61
+  secretKey: 372f1c6b5d5da62bb33568cce3dde346
+  siteId: 10
+  id: 2
+users:
+- id: 1
+  email: veeresh.tn@unbxd.com
+  password: Test@194Veeresh

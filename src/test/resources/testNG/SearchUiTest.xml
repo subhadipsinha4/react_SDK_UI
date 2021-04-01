@@ -1,0 +1,33 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Search UI Tests " parallel="tests" thread-count="10" verbose="10" preserve-order="true">
+    <test name="Search UI test">
+        <classes>
+            <class name="unbxdTests.testNg.frontEndUi.Search_SiteTest">
+            </class>
+        </classes>
+    </test>
+
+    <test name="Facet UI test">
+        <classes>
+            <class name="unbxdTests.testNg.frontEndUi.Facet_SiteTest">
+            </class>
+        </classes>
+    </test>
+
+    <test name="Pagination UI test">
+        <classes>
+            <class name="unbxdTests.testNg.frontEndUi.Pagination_SiteTest">
+            </class>
+        </classes>
+    </test>
+
+    <test name="SortBy UI test">
+        <classes>
+            <class name="unbxdTests.testNg.frontEndUi.SortBy_SiteTest">
+            </class>
+        </classes>
+    </test>
+
+
+</suite>
