@@ -29,6 +29,7 @@ public class Pagination_Actions extends Pagination_Page {
     public void testPaginationIsDisplayingOrNot()
     {
         await();
+        await();
 
     }
 }
