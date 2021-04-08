@@ -41,6 +41,9 @@ public class Pagination_SiteTest extends BaseTest {
         pagination_actions.goToWebsite(url);
         maximizeWindow();
         pagination_actions.searchQuery(query);
+        //pagination_actions.testPaginationIsDisplayingOrNot();
+        //pagination_actions.testPaginationIsWorkingOrNot();
+        pagination_actions.testPaginationScenarioInCaseOfLastPageResults();
 
 
 

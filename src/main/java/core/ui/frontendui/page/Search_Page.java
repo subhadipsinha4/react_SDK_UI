@@ -36,8 +36,6 @@ public class Search_Page extends UiBase {
     public String ClickViewExpected="UNX-viewType__option -selected";
     @FindBy(xpath = "//button[@data-testid='UNX_pageNumber2']")
     public FluentWebElement goTo2ndPage;
-    @FindBy(xpath = "//div[@class='UNX-pageNavigation__container']")
-    public FluentWebElement paginationDisplayOrNot;
     @FindBy(xpath = "//div[@class='UNX-pageSize__container']")
     public FluentWebElement pageSizeContainer;
     @FindBy(xpath = "//div[@class='UNX-sortby__container']")
@@ -57,16 +55,7 @@ public class Search_Page extends UiBase {
     @FindBy(xpath = "//div[@class='UNX-products__container']//div[@class='-price']")
     public FluentWebElement ProductPrice;
     public String UnbxdProductPrice="//div[@class='-price']";
-    @FindBy(xpath = "//button[text()='>']")
-    public FluentWebElement forwardArrow;
-    @FindBy(xpath = "//button[text()='<']")
-    public FluentWebElement backwardArrow;
-    @FindBy(xpath = "//button[@class='UNX-pageNavigation__button -selected']")
-    public FluentWebElement currentPage;
-    @FindBy(xpath="//div[@class='UNX-pageNavigation__container']")
-    public  FluentWebElement pagination;
-    @FindBy(xpath = "//select[@class='UNX-pageSize__dropdown']")
-    public WebElement productPerPageDropDown;
+
     public String perPageProduct="//select[@class='UNX-pageSize__dropdown']";
     @FindBy (xpath = "//a[@class='UNX-product-card UNX-grid-card']")
     public FluentWebElement productsPerPage;
