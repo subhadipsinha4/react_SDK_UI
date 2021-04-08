@@ -59,6 +59,15 @@ public class Pagination_Actions extends Pagination_Page {
 
     }
 
+    public void testPaginationBackArrowIsWorking() throws InterruptedException {
+        int oldPageNo=Integer.parseInt(currentPage.getText());
+        click(backwardArrow);
+        Thread.sleep(2000);
+        softAssert.assertEquals(Integer.parseInt(currentPage.getText()),oldPageNo-1,"Pagination back arrow key is not working.");
+        System.out.println("Pass: Pagination Back arrow key is working.");
+
+    }
+
     public void  testPaginationScenarioInCaseOfLastPageResults() throws InterruptedException {
         searchQuery(productTitle);
         Thread.sleep(2000);

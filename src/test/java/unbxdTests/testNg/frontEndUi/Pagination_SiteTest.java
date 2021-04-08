@@ -44,6 +44,7 @@ public class Pagination_SiteTest extends BaseTest {
         pagination_actions.testPaginationIsDisplayingOrNot();
         pagination_actions.paginationIsWorkingOrNot();
         pagination_actions.testForwardArrowKeyIsWorkingOrNot();
+        pagination_actions.testPaginationBackArrowIsWorking();
         pagination_actions.testPaginationScenarioInCaseOfLastPageResults();
 
 
