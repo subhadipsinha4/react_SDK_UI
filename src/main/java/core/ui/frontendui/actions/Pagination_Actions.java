@@ -72,22 +72,7 @@ public class Pagination_Actions extends Pagination_Page {
         System.out.println("Pass: Pagination forward arrow key is working.");
     }
 
-//    public void  testPaginationScenarioInCaseOfLastPageResults() throws InterruptedException {
-//        await();
-//        click(searchBox);
-//        searchBox.clear();
-//        searchBox.fill().with(productTitle);
-//        searchBox.submit();
-//        awaitForPageToLoad();
-//        int re;
-//        while(forwardArrow.isDisplayed()){
-//             re=clickPage();
-//             if (re==1)
-//                 break;
-//        }
-//
-//
-//    }
+
 
     public void  testPaginationScenarioInCaseOfLastPageResults() throws InterruptedException {
         //String max="";
