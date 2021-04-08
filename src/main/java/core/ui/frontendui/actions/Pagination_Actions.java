@@ -39,10 +39,6 @@ public class Pagination_Actions extends Pagination_Page {
         await();
         softAssert.assertEquals(unbxdPagination.isDisplayed(),true,"Fail: Pagination is not present");
         System.out.println("Pass: pagination is getting displayed");
-        //        if(unbxdPagination.isDisplayed()==true)
-//            System.out.println("Pass: pagination is getting displayed");
-//        else
-//            System.out.println("Fail: pagination is not getting displayed");
     }
     public void testPaginationIsWorkingOrNot()
     {
@@ -92,11 +88,11 @@ public class Pagination_Actions extends Pagination_Page {
             i++;
         }
         List<WebElement> pageArrows = getDriver().findElements(By.xpath(paginationArrowIcon));
-        for (int j = 0; j < pageArrows.size(); j++) {
+        for (int j = 0; j < pageArrows.size()-1; j++) {
             if (pageArrows.get(j).getText() != ">")
-                System.out.println("Pass");
+                System.out.println("Pass: In case of last page, forward arrow key is not getting displayed.");
             else if (pageArrows.get(j).getText() == ">")
-                System.out.println("Fail");
+                System.out.println("Fail: In case of last page, forward arrow key is getting displayed, it should not display.");
         }
 
     }
