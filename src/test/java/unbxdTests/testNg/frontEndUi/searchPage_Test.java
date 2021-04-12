@@ -65,7 +65,7 @@ public class searchPage_Test extends BaseTest {
         search_SiteActions.dontEnterQueryPressEnterKey();
         search_SiteActions.testBlankSpaceInSearchedBox();
         search_SiteActions.searchUsingUniqueId();
-//        search_SiteActions.testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor();
+        search_SiteActions.testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor();
         search_SiteActions.testInvalidSearchQuery(search_SiteActions.invalidQuery);
         search_SiteActions.spellErrorMessageIsDisplayOrNot();
         search_SiteActions.singleWordSpellErrorIsWorking();

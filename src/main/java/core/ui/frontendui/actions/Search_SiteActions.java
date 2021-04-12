@@ -545,7 +545,7 @@ public class Search_SiteActions extends Search_Page {
 
 
 //
-//    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException {
+    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException {
 //        int match=0;
 //        searchAction(unbxdColorQuerySearch);
 //        Response response=given().get(baseURL);
@@ -567,16 +567,17 @@ public class Search_SiteActions extends Search_Page {
 ////            }
 ////
 ////        }
-//        List<WebElement>allProductsTitle=getDriver().findElements(By.xpath(unbxdProductsTitle));
-//        for(WebElement e: allProductsTitle)
-//        {
-//            if(e.getText().equalsIgnoreCase("red")==true) f=0;
-//            else{f=1;break;}
-//        }
-//        if(f==0)System.out.println("Pass: Search terms is getting displayed on product title");
-//        else System.out.println("Fail: Search terms is not getting displayed on product title ");
+        int f=1;
+        List<WebElement>allProductsTitle=getDriver().findElements(By.xpath(unbxdProductsTitle));
+        for(WebElement e: allProductsTitle)
+        {
+            if(e.getText().equalsIgnoreCase("red")==true) f=0;
+            else{f=1;break;}
+        }
+        if(f==0)System.out.println("Pass: Search terms is getting displayed on product title in terms of color");
+        else System.out.println("Fail: Search terms is not getting displayed on product title in terms of color");
 
-//    }
+    }
 
     public void  checkTotalNumberOfProductsInSearchedResultsPageAndAPI() throws InterruptedException {
         Response resp;
