@@ -65,7 +65,7 @@ public class searchPage_Test extends BaseTest {
         search_SiteActions.dontEnterQueryPressEnterKey();
         search_SiteActions.testBlankSpaceInSearchedBox();
         search_SiteActions.searchUsingUniqueId();
-        //search_SiteActions.testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor();
+//        search_SiteActions.testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor();
         search_SiteActions.testInvalidSearchQuery(search_SiteActions.invalidQuery);
         search_SiteActions.spellErrorMessageIsDisplayOrNot();
         search_SiteActions.singleWordSpellErrorIsWorking();
@@ -77,14 +77,6 @@ public class searchPage_Test extends BaseTest {
         search_SiteActions.testInCaseOfTwoPrices();
         search_SiteActions.testWhetherPriceIsDisplayingInTwoDecimalFormatAllOverTheSite();
         search_SiteActions.checkTotalNumberOfProductsInSearchedResultsPageAndAPI();
-        //search_SiteActions.paginationIsDisplayOrNot();
-        //search_SiteActions.paginationIsWorkingOrNot();
-        //search_SiteActions.forwardArrowKey();
-        //search_SiteActions.backArrowKey();
-        //search_SiteActions.selectedPageHighlightOrNot();
-        //search_SiteActions.numberOfProductPerPage();
-
-        await();
 
     }
 

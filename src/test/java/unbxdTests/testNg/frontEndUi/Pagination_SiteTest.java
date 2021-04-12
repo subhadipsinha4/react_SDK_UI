@@ -45,7 +45,16 @@ public class Pagination_SiteTest extends BaseTest {
         pagination_actions.testPaginationIsWorkingOrNot();
         pagination_actions.testPaginationBackArrowIsWorking();
         pagination_actions.testPaginationForwardArrowIsWorking();
+        pagination_actions.testSelectedPageHighlightOrNot();
         pagination_actions.testPaginationScenarioInCaseOfLastPageResults();
+        pagination_actions.testPaginationInCaseOfSort();
+        pagination_actions.testPaginationInCaseOfFilter();
+        pagination_actions.testNumberOfItemsPerPageOption();
+        pagination_actions.testNumberOfItemsPerPageOptionWorkingOrNot();
+        pagination_actions.testSelectedPageOptionIsShowingAsHighlighted();
+        pagination_actions.testFooterDisplayingPaginationOptionOrNot();
+        pagination_actions.testWhetherFooterPaginationIsWorkingOrNot();
+        pagination_actions.testCaseOfOnePageResults();
 
 
 

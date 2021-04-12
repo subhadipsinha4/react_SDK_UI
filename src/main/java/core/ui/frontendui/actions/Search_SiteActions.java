@@ -1,7 +1,12 @@
 package core.ui.frontendui.actions;
+import com.google.gson.JsonArray;
 import core.ui.frontendui.page.Search_Page;
 import freemarker.cache.WebappTemplateLoader;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import io.restassured.specification.RequestSpecification;
 import org.fluentlenium.core.domain.FluentWebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -11,8 +16,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.UnaryOperator;
+
 
 import static io.restassured.RestAssured.given;
 import static org.yaml.snakeyaml.tokens.Token.ID.Key;
@@ -72,10 +83,10 @@ public class Search_SiteActions extends Search_Page {
 
     }
 
-    public  void testSearchedResultsMessageFormat(){
-        await();
+    public  void testSearchedResultsMessageFormat() throws InterruptedException {
+        Thread.sleep(2000);
         softAssert.assertEquals(searchResultFormat.getText(),"Results for -");
-        if(searchResultFormat.getText().equals("Results for -")) {
+        if(searchResultFormat.getText().contains("Results for -")) {
             System.out.println("Test Case 5: Pass: Searched Results Message Format is correct");
         }else{ System.out.println("Test Case 5: Fail: Searched Results Message Format is not correct");
         }
@@ -531,19 +542,41 @@ public class Search_SiteActions extends Search_Page {
             System.out.println("Pass: Price is displaying in two decimal format all over the site");
     }
 
-    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException {
-        int f=1;
-        searchAction(unbxdColorQuerySearch);
-        List<WebElement>allProductsTitle=getDriver().findElements(By.xpath(unbxdProductsTitle));
-        for(WebElement e: allProductsTitle)
-        {
-            if(e.getText().equalsIgnoreCase("red")==true) f=0;
-            else{f=1;break;}
-        }
-        if(f==0)System.out.println("Pass: Search terms is getting displayed on product title");
-        else System.out.println("Fail: Search terms is not getting displayed on product title ");
 
-    }
+
+//
+//    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException {
+//        int match=0;
+//        searchAction(unbxdColorQuerySearch);
+//        Response response=given().get(baseURL);
+//        ResponseBody body = response.getBody();
+//        List<String> c=body.jsonPath().getList("response.products.variants.v_color");
+//
+//        //List<String> title=response.jsonPath().get("response.products.title");
+//
+//
+////        for(int i=0;i<colors.size();i++) {
+////            if (unbxdColorQuerySearch.contains(colors.get(i))) {
+////                match++;
+////                System.out.println("Matched product title: ["+title.get(i)+" color: ["+colors.get(i)+"]");
+////            }
+////            else{
+////                System.out.println("Fail: Results are not getting displaying as per the searched term in terms of color, for query: "+ unbxdColorQuerySearch);
+////                System.out.println("Mismatched product position: "+match+" product title["+title.get(i)+"]");
+////                break;
+////            }
+////
+////        }
+//        List<WebElement>allProductsTitle=getDriver().findElements(By.xpath(unbxdProductsTitle));
+//        for(WebElement e: allProductsTitle)
+//        {
+//            if(e.getText().equalsIgnoreCase("red")==true) f=0;
+//            else{f=1;break;}
+//        }
+//        if(f==0)System.out.println("Pass: Search terms is getting displayed on product title");
+//        else System.out.println("Fail: Search terms is not getting displayed on product title ");
+
+//    }
 
     public void  checkTotalNumberOfProductsInSearchedResultsPageAndAPI() throws InterruptedException {
         Response resp;
@@ -566,54 +599,7 @@ public class Search_SiteActions extends Search_Page {
         await();
 
     }
-//    public void paginationIsDisplayOrNot()
-//    {
-//        Assert.assertEquals(pagination.isDisplayed(),true,"Fail: Pagination is not getting displayed");
-//        System.out.println("Pass: Pagination is getting displayed");
-//    }
-//
-//    public void paginationIsWorkingOrNot()
-//    {
-//        int cPage=Integer.parseInt(currentPage.getText());
-//        goTo2ndPage.click();
-//        await();
-//    try{
-//            Assert.assertEquals(Integer.parseInt(currentPage.getText()),cPage+1,"Fail: Pagination is not working");
-//            System.out.println("Pass: Pagination is working");
-//        } catch(Exception e) {
-//            e.getMessage();
-//        }
-//
-//    }
-//
-//    public void forwardArrowKey() throws InterruptedException {
-//        int oldPageNo=Integer.parseInt(currentPage.getText());
-//        forwardArrow.click();
-//        Thread.sleep(2000);
-//        Assert.assertEquals(Integer.parseInt(currentPage.getText()),oldPageNo+1,"Forward Arrow key is working");
-//        System.out.println("Pass: Pagination forward arrow key is working.");
-//
-//    }
-//
-//    public void backArrowKey() throws InterruptedException {
-//        int oldPageNo=Integer.parseInt(currentPage.getText());
-//        click(backwardArrow);
-//        Thread.sleep(2000);
-//        Assert.assertEquals(Integer.parseInt(currentPage.getText()),oldPageNo-1,"Pagination back arrow key is not working.");
-//        System.out.println("Pass: Pagination Back arrow key is working.");
-//    }
-//
-//
-//    public void selectedPageHighlightOrNot()
-//    {
-//        int oldPageNo=Integer.parseInt(currentPage.getText());
-//        click(forwardArrow);
-//        await();
-//        int newPageNo=Integer.parseInt(currentPage.getText());
-//        Assert.assertEquals(newPageNo,oldPageNo+1,"Fail: Selected page is not getting highlighted");
-//        System.out.println("Pass: Selected page is highlighted.");
-//
-//    }
+
 //    public void testSortIsWorkingORNot() throws InterruptedException {
 //        Select sortList= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
 //        selectSort(sortList,"min_price|asc");

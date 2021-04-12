@@ -31,11 +31,23 @@ public class Pagination_Page extends UiBase {
     public  FluentWebElement pagination;
     public static String paginations="//div[@class='UNX-pageNavigation__container']";
     public String productTitle="Beverly Hills Polo Club";
+    public String queryForSingleProduct="GS-115 Boys' Paint Splatter Stretch Denim Moto Shorts";
+    @FindBy (xpath = "//div[@class='UNX-pageNavigation__container']")
+    public FluentWebElement pageValue;
     public String pagenumber="//button[@class='UNX-pageNavigation__button']";
     @FindBy(xpath="//button[@class='UNX-pageNavigation__button']")
     public WebElement pageNumber;
     public static List<WebElement> page;
-
+    public String sortByDropdown="//select[@class='UNX-sortby__dropdown']";
+    @FindBy (xpath = "//div[text()='Boys Fashion']")
+    public FluentWebElement UnbxdCategoryFacet;
+    public String unbxdSearchQuery="Jacket";
+    @FindBy (xpath = "//select[@class='UNX-pageSize__dropdown']")
+    public FluentWebElement unbxdPageSizeDropDown;
+    public String paginationUnbxd="//div[@class='UNX-pagination__pageNavigation']";
+    public String unbxdPageSizeDropdown="//select[@class='UNX-pageSize__dropdown']";
+    public  String unbxdProductOnPage="//div[@class='UNX-productCard__container']";
+    public String paginationForwordKey="//button[text()='>']";
     public void clickPage() throws InterruptedException {
             forwardArrow.click();
             Thread.sleep(2000);

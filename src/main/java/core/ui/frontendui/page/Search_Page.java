@@ -47,10 +47,6 @@ public class Search_Page extends UiBase {
     public String productsContainer="//div[@class='UNX-products__container']";
     public String UnbxdProductContainer="//div[@class='UNX-productCard__container']";
     public String UnbxdProductImage="//img[@class='-image']";
-    //@FindBy(xpath = "//img[@class='-image']")
-   // public FluentWebElement UnbxdProductImage;
-    //@FindBy(xpath = "//div[@class='UNX-products__container']//div[@class='-title']")
-    //public FluentWebElement UnbxdProductTitle;
     public String UnbxdProductTitle="//div[@class='-title']";
     @FindBy(xpath = "//div[@class='UNX-products__container']//div[@class='-price']")
     public FluentWebElement ProductPrice;
@@ -80,21 +76,13 @@ public class Search_Page extends UiBase {
     public String spellMistakeSingleWorld="swirt";
     @FindBy(xpath = "//span[@data-testid='UNX_spellCheck']")
     public FluentWebElement spellCorrectWord;
-//    @FindBy(xpath = "//div[@class='-details']//div[@class='-title']")
-//    public FluentWebElement productsTitle;
     public String unbxdProductsTitle="//div[@class='-title']";
-//    @FindBy(xpath = "//div[@class='-details']//div[@class='-price']")
-//    public FluentWebElement productsPrice;
     public String productsPrice="//div[@class='-price']";
     public String productsStrickenPrice="//div[@class='-details']//div[@class='-price']//span[@class]";
     public String productsImage="//div[@class='UNX-productCard__container']//img";
-//    @FindBy(xpath = "//div[@class='-details']//div[@class='-price']//span[@class]")
-//    public FluentWebElement productsStrickenPrice;
-//    @FindBy(xpath = "//img[@src]")
-//    public FluentWebElement productsImage;
     public String spellCorrectSingleWord="shirt";
     public String specialCharacterQuery="Shirt & jacket";
-    public String twoWordQuery="Red Shirt";
+    public String twoWordQuery="red shirt";
     public String threeWordQuery="mad blue shirt";
     public String lowerCaseQuery="shirt";
     public String combinationQuery="ReD SHiRt";
@@ -103,8 +91,6 @@ public class Search_Page extends UiBase {
     public String UnbxdStrickenPrice="//span[@class='-strike']";
     public String unbxdColorQuerySearch="Red top";
     public String baseURL="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=red";
+    public String baseURL2="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=";
 
-
-
-    //  public int currentPageNo=Integer.parseInt(currentPage.getText());
 }
