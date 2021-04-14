@@ -44,9 +44,13 @@ public class Sort_SiteTest extends BaseTest {
         sort_actions.testCheckWhetherSortByIsThereOrNot();
         sort_actions.testSortByIsSelectedAsSORTByRelevancy();
         sort_actions.testWhetherSortByIsWorkingOrNot();
+
+        sort_actions.testWhetherSortIsWorkingInCaseOfFilter();
+        sort_actions.testWhetherFilterIsWorkingInCaseOfSort();
+
         sort_actions.testWhetherSortingIsWorkingInPagination();
         sort_actions.testWhetherSortIsWorkingEvenRefreshingOrReloadingPage();
-       // sort_actions.testWhetherSortIsWorkingWhenCopyingTheSameURLInTheNewTab();
+        sort_actions.testWhetherSortIsWorkingWhenCopyingTheSameURLInTheNewTab();
 
     }
 

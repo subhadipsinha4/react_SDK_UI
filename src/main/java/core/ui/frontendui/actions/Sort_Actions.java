@@ -9,9 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Sort_Actions extends Sort_Page {
@@ -25,6 +28,7 @@ public class Sort_Actions extends Sort_Page {
         awaitForPageToLoad();
         return this;
     }
+
     public void searchQuery(String query) throws InterruptedException {
         await();
         awaitForPageToLoad();
@@ -36,106 +40,196 @@ public class Sort_Actions extends Sort_Page {
         await();
     }
 
-    public void testCheckWhetherSortByIsThereOrNot(){
+    public void testCheckWhetherSortByIsThereOrNot() {
         await();
-        softAssert.assertEquals(awaitForElementPresence(sortOptions),"true","Sort By options is not present on SRP");
+        softAssert.assertEquals(awaitForElementPresence(sortOptions), "true", "Sort By options is not present on SRP");
         System.out.println("Pass: Sort by options is present on SRP");
     }
 
-    public void testSortByIsSelectedAsSORTByRelevancy()
-    {
+    public void testSortByIsSelectedAsSORTByRelevancy() {
         await();
-        softAssert.assertEquals(sortOptions.getText(),"Most Relevant","Default sort by option is not 'Most Relevant'");
+        softAssert.assertEquals(sortOptions.getText(), "Most Relevant", "Default sort by option is not 'Most Relevant'");
         System.out.println("Pass: Default sort by option is selected 'Most Relevant'");
     }
 
     public void testWhetherSortByIsWorkingOrNot() throws InterruptedException {
-        int response=0;
+        int response = 0;
         await();
         Select perPageP = new Select(getDriver().findElement(By.xpath(UnbxdProductPerPageDropDown)));
         perPageP.selectByValue("5");
         Thread.sleep(3000);
         Select sortList = new Select(getDriver().findElement(By.xpath(sortByDropdown)));
-        response=selectSort(sortList,"min_price|asc");
-        if(response==1) System.out.println("Pass: Sort By: Lowest price is working as expected.");
-        response=selectSort(sortList,"min_price|desc");
-        if(response==1) System.out.println("Pass: Sort By: Highest price is working as expected.");
-        selectSort(sortList,"undefined|undefined");
-        if(response==1) System.out.println("Pass: Sort By: Most Relevant is working as expected.");
+        List<WebElement> allSortOptions = sortList.getOptions();
+        for (int i = allSortOptions.size() - 1; i >= 0; i--) {
+            selectSort(sortList, allSortOptions.get(i).getAttribute("value"));
+            response= testProductPriceForSelectedSort(allSortOptions.get(i).getAttribute("value"));
+            if (response == 0)
+                System.out.println("Fail: Sort By" + allSortOptions.get(i).getText() + "is not working as expected.");
+        }
+        if (response == 1)
+            System.out.println("Pass: Sort by is working. ");
 
     }
+//
+//    public void sortOptionsTest() throws InterruptedException {
+//        int response = 0;
+//        await();
+//        Select perPageP = new Select(getDriver().findElement(By.xpath(UnbxdProductPerPageDropDown)));
+//        perPageP.selectByValue("5");
+//        Thread.sleep(3000);
+//        Select sortList = new Select(getDriver().findElement(By.xpath(sortByDropdown)));
+//        List<WebElement> allSortOptions = sortList.getOptions();
+//        for (int i = allSortOptions.size() - 1; i >= 0; i--) {
+//            selectSort(sortList, allSortOptions.get(i).getAttribute("value"));
+//            response= testProductPriceForSelectedSort(allSortOptions.get(i).getAttribute("value"));
+//            if (response == 0)
+//                System.out.println("Fail: Sort By" + allSortOptions.get(i).getText() + "is not working as expected.");
+//        }
+//        if (response == 1)
+//            System.out.println("Pass: Sort by is working. ");
+//    }
 
-    public int selectSort(Select sortList, String sortValue) throws InterruptedException {
-        int count=0,flag=1;
+    public void selectSort(Select sortList, String sortValue) throws InterruptedException {
         sortList.selectByValue(sortValue);
-        System.out.println("--------------------------------");
-        System.out.println("Selected SortBy: "+sortValue);
-        softAssert.assertEquals(sortValue,sortList.getFirstSelectedOption().getText(),"Selected sort by option is not getting selected.");
-        System.out.println("Sort applyed on page: "+sortList.getFirstSelectedOption().getText());
-        await();
-        String[] result=productDescription.getText().split("to");
-        softAssert.assertEquals(result[0].contains("1"),"true","Page is not redirected to the 1st page.");
-        System.out.println("Current page: "+currentPage.getText());
-        System.out.println("--------------------------------");
+        softAssert.assertEquals(sortValue, sortList.getFirstSelectedOption().getText(), "Selected sort by option is not getting selected.");
+        String[] result = productDescription.getText().split("to");
+        softAssert.assertEquals(result[0].contains("1"), "true", "Page is not redirected to the 1st page.");
         Thread.sleep(3000);
-//        System.out.println("Sorted product list on SRP");
-//        System.out.println("--------------------------------");
-//        List<WebElement> title=getDriver().findElements(By.xpath(productTitle));
-//        for(WebElement e: title)
-//            System.out.println(e.getText());
-//        System.out.println("--------------------------------");
+    }
+//        List<WebElement> unbxdPrices = getDriver().findElements(By.xpath(unbxdPrice));
+//        float defaultPrice = 0;
+//        for (WebElement uP : unbxdPrices) {
+//            if (sortValue.equals("min_price|asc")) {
+//                Float priceFloat = Float.parseFloat(uP.getText().replace("$", ""));
+//                if (priceFloat < defaultPrice) {
+//                    defaultPrice = 0;
+//                    return 0;
+//                } else {
+//                    defaultPrice = priceFloat;
+//                }
+//
+//            } else if (sortValue.equals("min_price|desc")) {
+//                Float priceFloat = Float.parseFloat(uP.getText().replace("$", ""));
+//                if (flag == 1) {
+//                    defaultPrice = priceFloat;
+//                    flag = 0;
+//                }
+//                if (defaultPrice < priceFloat) {
+//                    flag = 1;
+//                    return 0;
+//                } else {
+//                    defaultPrice = priceFloat;
+//                }
+//
+//            }
+//
+//        }
 
-        List<WebElement>unbxdPrices=getDriver().findElements(By.xpath(unbxdPrice));
-        float defaultPrice=0;
-        for(WebElement uP: unbxdPrices) {
+
+    public int testProductPriceForSelectedSort(String sortValue) {
+        int count = 0, flag = 1;
+        List<WebElement> unbxdPrices = getDriver().findElements(By.xpath(unbxdPrice));
+        float defaultPrice = 0;
+        for (WebElement uP : unbxdPrices) {
             if (sortValue.equals("min_price|asc")) {
-                Float priceFloat=Float.parseFloat(uP.getText().replace("$",""));
-                if(priceFloat<defaultPrice) {
-                    System.out.println("Sort By: Lowest price is not working");
+                Float priceFloat = Float.parseFloat(uP.getText().replace("$", ""));
+                if (priceFloat < defaultPrice) {
                     defaultPrice = 0;
                     return 0;
-                }else {defaultPrice=priceFloat; }
-
-            }else if (sortValue.equals("min_price|desc")) {
-                Float priceFloat=Float.parseFloat(uP.getText().replace("$",""));
-                if(flag==1){
-                    defaultPrice=priceFloat;
-                    flag=0;
+                } else {
+                    defaultPrice = priceFloat;
                 }
-                if(defaultPrice<priceFloat) {
-                    System.out.println("Sort By: Highest price is not working");
-                    flag=1;
+
+            } else if (sortValue.equals("min_price|desc")) {
+                Float priceFloat = Float.parseFloat(uP.getText().replace("$", ""));
+                if (flag == 1) {
+                    defaultPrice = priceFloat;
+                    flag = 0;
+                }
+                if (defaultPrice < priceFloat) {
+                    flag = 1;
                     return 0;
-                }else
-                { defaultPrice=priceFloat; }
+                } else {
+                    defaultPrice = priceFloat;
+                }
 
             }
 
         }
         return 1;
+    }
+
+
+    public void testWhetherSortIsWorkingInCaseOfFilter() throws InterruptedException
+    {
+        int response = 0;
+        await();
+        Select perPageP = new Select(getDriver().findElement(By.xpath(UnbxdProductPerPageDropDown)));
+        perPageP.selectByValue("5");
+        Thread.sleep(3000);
+        Select sortList = new Select(getDriver().findElement(By.xpath(sortByDropdown)));
+        List<WebElement> allSortOptions = sortList.getOptions();
+        for (int i = allSortOptions.size() - 1; i >= 0; i--) {
+            selectSort(sortList, allSortOptions.get(i).getAttribute("value"));
+            categoryFacetUnbxd.click();
+            response= testProductPriceForSelectedSort(allSortOptions.get(i).getAttribute("value"));
+            if (response == 0)
+                System.out.println("Fail: Sort By" + allSortOptions.get(i).getText() + "is not working in case of filter.");
+        }
+        categoryFacetUnbxd.click();
+        if (response == 1)
+            System.out.println("Pass: Sort by is working in case of filter ");
 
     }
+
+    public void testWhetherFilterIsWorkingInCaseOfSort() throws InterruptedException
+    {
+        int response = 0;
+        await();
+        Select perPageP = new Select(getDriver().findElement(By.xpath(UnbxdProductPerPageDropDown)));
+        perPageP.selectByValue("5");
+        Thread.sleep(3000);
+        Select sortList = new Select(getDriver().findElement(By.xpath(sortByDropdown)));
+        List<WebElement> allSortOptions = sortList.getOptions();
+        for (int i = allSortOptions.size() - 1; i >= 0; i--) {
+            categoryFacetUnbxd.click();
+            selectSort(sortList, allSortOptions.get(i).getAttribute("value"));
+            response= testProductPriceForSelectedSort(allSortOptions.get(i).getAttribute("value"));
+            if (response == 0)
+                System.out.println("Fail: Filter is not working for sort by: " + allSortOptions.get(i).getText());
+        }
+        categoryFacetUnbxd.click();
+        if (response == 1)
+            System.out.println("Pass: Filter is working for Sort.");
+
+    }
+
 
     public void testWhetherSortingIsWorkingInPagination() throws InterruptedException {
         await();
+        int res=0;
         Select sortList= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
-        sortInPagination(sortList,"min_price|asc");
-        sortInPagination(sortList,"min_price|desc");
-        sortInPagination(sortList,"undefined|undefined");
+        List<WebElement>allSortOptions=sortList.getOptions();
+        for(int i=allSortOptions.size()-1;i>=0;i--) {
+            res=sortInPagination(sortList, allSortOptions.get(i).getAttribute("value"));
+            if(res==0)
+            {
+                System.out.println("Pass: Sort By: "+ sortList.getFirstSelectedOption().getText()+" is not working for pagination");
+            }
+        }
+        if(res==1)
+            System.out.println("Pass: Sorting is working in case of pagination");
     }
 
-    public void sortInPagination(Select sortList, String sortValue) throws InterruptedException {
+    public int sortInPagination(Select sortList, String sortValue) throws InterruptedException {
         int response=0;
         await();
         selectSort(sortList,sortValue);
-        //if(response==1)System.out.println("Sort By: "+ sortList.getFirstSelectedOption().getText()+" is working for page"+currentPage.getText());
         forwardArrow.click();
         await();
-        awaitForPageToLoad();
-        System.out.println("----------------------------------");
-        System.out.println("Current page: "+currentPage.getText()+" applyed sort: "+sortList.getFirstSelectedOption().getText());
-        response=selectSort(sortList,sortValue);
-        if(response==1)System.out.println("Pass: Sort By: "+ sortList.getFirstSelectedOption().getText()+" is working for pagination");
+        selectSort(sortList,sortValue);
+        return testProductPriceForSelectedSort(sortValue);
+
 
     }
 
@@ -167,31 +261,54 @@ public class Sort_Actions extends Sort_Page {
         softAssert.assertEquals(productRange,productDescription.getText(),"Product description is getting changed after reload the page.");
         softAssert.assertEquals(selectedSort,sortList.getFirstSelectedOption().getText(),"Selected sort is getting changed after reload the page.");
         softAssert.assertEquals(noOfProduct,perPageP.getFirstSelectedOption().getText(),"No of product per page is getting changed after reload the page.");
-        System.out.println("After reload the page, it is getting displayed earlier selected sort.");
+        System.out.println("Pass: After reload the page, it is getting displayed earlier selected sort.");
 
 
     }
 
-    public void testWhetherSortIsWorkingWhenCopyingTheSameURLInTheNewTab() throws InterruptedException {
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.println(" TEST WHETHER SORT IS WORKING WHEN WE ARE COPYING THE SAME URL IN THE NEW TAB.");
-        System.out.println("-------------------------------------------------------------------------");
+//    public void testWhetherSortIsWorkingWhenCopyingTheSameURLInTheNewTab() throws InterruptedException {
+//        System.out.println("-------------------------------------------------------------------------");
+//        System.out.println(" TEST WHETHER SORT IS WORKING WHEN WE ARE COPYING THE SAME URL IN THE NEW TAB.");
+//        System.out.println("-------------------------------------------------------------------------");
+//        Select sortList= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
+//        String selectedSort=sortList.getFirstSelectedOption().getText();
+//        String url=getDriver().getCurrentUrl();
+//        ((JavascriptExecutor) getDriver()).executeScript("window.open()");
+//        ArrayList<String> tabs = new ArrayList(getDriver().getWindowHandles());
+//        getDriver().switchTo().window(tabs.get(1));
+//        getDriver().get(url);
+//        //getDriver().navigate().to(url);
+//        Thread.sleep(5000);
+//        //getDriver().manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+//        softAssert.assertEquals(awaitTillElementDisplayed(sortdropDown),"true","Sort By is not getting display");
+//        Select sortList1= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
+//        //softAssert.assertEquals(selectedSort,sortList1.getFirstSelectedOption().getText(),"Sort is not working when copy the same URL in new tab");
+//
+//
+//
+//
+//    }
+    public void testWhetherSortIsWorkingWhenCopyingTheSameURLInTheNewTab() throws AWTException, InterruptedException {
         Select sortList= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
         String selectedSort=sortList.getFirstSelectedOption().getText();
         String url=getDriver().getCurrentUrl();
-        ((JavascriptExecutor) getDriver()).executeScript("window.open('')");
-        ArrayList<String> tabs = new ArrayList(getDriver().getWindowHandles());
-        getDriver().switchTo().window(tabs.get(1));
-        getDriver().navigate().to(url);
-        await();
-        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        softAssert.assertEquals(awaitTillElementDisplayed(sortdropDown),"true","Sort By is not getting display");
+        Robot rob = new Robot();
+        rob.keyPress(KeyEvent.VK_CONTROL);
+        rob.keyPress(KeyEvent.VK_T);
+        rob.keyRelease(KeyEvent.VK_CONTROL);
+        rob.keyRelease(KeyEvent.VK_T);
+        Thread.sleep(3000);
+        Set<String> ids = getDriver().getWindowHandles();
+        Iterator <String> it = ids.iterator();
+        String currentWindow = it.next();
+        String newWindow = it.next();
+        getDriver().switchTo().window(newWindow);
+        getDriver().get(url);
         Select sortList1= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
-        softAssert.assertEquals(selectedSort,sortList1.getFirstSelectedOption().getText(),"Sort is not working when copy the same URL in new tab");
-
-
-
-
+        if(selectedSort.equals(sortList1.getFirstSelectedOption().getText()))
+            System.out.println("Pass: Sort is working when copying the same URL in the new tab");
+        else
+            System.out.println("Fail: Sort is not working when copying the same URL in the new tab");
     }
 
 

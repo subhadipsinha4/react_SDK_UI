@@ -25,8 +25,8 @@ public class Sort_Page extends UiBase {
     @FindBy(xpath = "//button[@class='UNX-pageNavigation__button -selected']")
     public FluentWebElement currentPage;
     public String UnbxdProductPerPageDropDown="//select[@class='UNX-pageSize__dropdown']";
-//    @FindBy(xpath = "//body")
-//    public FluentWebElement unbxdPage;
+    @FindBy (xpath = "//div[@class='UNX-facet__element open']//div[text()='Clearance']")
+    public FluentWebElement categoryFacetUnbxd;
     public String unbxdPage="//body";
     public String pageLoad="Keys.F5";
 
