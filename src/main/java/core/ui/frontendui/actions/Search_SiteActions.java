@@ -9,6 +9,7 @@ import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.fluentlenium.core.domain.FluentWebElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -16,13 +17,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.UnaryOperator;
 
 
 import static io.restassured.RestAssured.given;
@@ -93,11 +93,12 @@ public class Search_SiteActions extends Search_Page {
 
     }
     public void testInvalidSearchQuery(String invQuery) throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(invQuery);
-        searchBoxClick.click();
-        Thread.sleep(2500);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(invQuery);
+//        searchBoxClick.click();
+//        Thread.sleep(2500);
+        searchAction(invQuery);
         softAssert.assertEquals(awaitForElementPresence(noResultFound),"true","Zero Result page is getting displayed");
         if(awaitForElementPresence(noResultFound)) {
             System.out.println("Test Case 19: Pass: Zero result page is getting displayed");
@@ -251,12 +252,13 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testSpacingBetweenMoreThanTwoWords() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(threeWordQuery);
-        searchBoxClick.click();
-        Thread.sleep(3000);
-//        softAssert.assertEquals(searchResultQuery.getText(),twoWordQuery);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(threeWordQuery);
+//        searchBoxClick.click();
+//        Thread.sleep(3000);
+        searchAction(threeWordQuery);
+        softAssert.assertEquals(searchResultQuery.getText(),twoWordQuery);
         if(searchResultQuery.getText().equalsIgnoreCase(threeWordQuery)){
             System.out.println("Pass: Spacing between more than three word is working as expecting on SRP");
         }else{
@@ -290,12 +292,13 @@ public class Search_SiteActions extends Search_Page {
 
     }
     public void testBlankSpaceInSearchedBox() throws InterruptedException {
-        await();
-        searchBox.clear();
         String oldUrl=getDriver().getCurrentUrl();
-        searchBox.fill().with(blankSpace);
-        searchBox.click();
-        Thread.sleep(3000);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(blankSpace);
+//        searchBox.click();
+//        Thread.sleep(3000);
+        searchAction(blankSpace);
         String newUrl=getDriver().getCurrentUrl();
         softAssert.assertEquals(oldUrl,newUrl,"Fail: Search is working for blank space.");
         if(oldUrl.equals(newUrl)) {
@@ -313,11 +316,12 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void searchUsingUniqueId() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(uniqueId);
-        searchBoxClick.click();
-        Thread.sleep(2500);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(uniqueId);
+//        searchBoxClick.click();
+//        Thread.sleep(2500);
+        searchAction(uniqueId);
         softAssert.assertEquals(uniqueIDPath.getAttribute("data-uniqueid"),uniqueId);
         if(uniqueIDPath.getAttribute("data-uniqueid").equals(uniqueId)) {
             System.out.println("Test Case 18: Pass: Search using uniqueId is working fine");
@@ -328,12 +332,13 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void checkForSpecialCharactersAreDisplayedFine() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(specialCharacterQuery);
-        searchBoxClick.click();
-        Thread.sleep(3000);
-        //softAssert.assertEquals(searchResultQuery.getText(),specialCharacterQuery,"Search using special characcter is not working.");
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(specialCharacterQuery);
+//        searchBoxClick.click();
+//        Thread.sleep(3000);
+        searchAction(specialCharacterQuery);
+        softAssert.assertEquals(searchResultQuery.getText(),specialCharacterQuery,"Search using special characcter is not working.");
         if(searchResultQuery.getText().equals(specialCharacterQuery)) {
             System.out.println("Pass: Search using special characters is working as expected.");
         }else{            System.out.println("Fail: Search using special characters is working as expected.");
@@ -364,23 +369,25 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testAllTextInLowerCase() throws Exception {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(lowerCaseQuery);
-        searchBoxClick.click();
-        Thread.sleep(3000);
-            //softAssert.assertTrue(searchResultQuery.getText().equals("ShiRT"));
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(lowerCaseQuery);
+//        searchBoxClick.click();
+//        Thread.sleep(3000);
+        searchAction(lowerCaseQuery);
+        softAssert.assertTrue(searchResultQuery.getText().equals("ShiRT"));
         if(searchResultQuery.getText().equals(lowerCaseQuery)){            System.out.println("Pass: Search is lower case test is working as expected.");
             }else {System.out.println("Fail: Search is lower case test is working as expected.");}
 
     }
 
     public void spellErrorMessageIsDisplayOrNot() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(spellMistakeSingleWorld);
-        searchBoxClick.click();
-        Thread.sleep(3000);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(spellMistakeSingleWorld);
+//        searchBoxClick.click();
+//        Thread.sleep(3000);
+        searchAction(spellMistakeSingleWorld);
         softAssert.assertEquals(awaitForElementPresence(didYouMean),"true","Spell error message is not getting displayed");
         if(awaitForElementPresence(didYouMean)){System.out.println("Test Case 20: Pass: Spell error message (did you mean) is getting displayed.");}
         else{System.out.println("Test Case 20: Fail: Spell error message (did you mean) is not getting displayed.");}
@@ -409,11 +416,12 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testWhetherTwoWordsSpellErrorIsWorking() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(twoWordSpellMistake);
-        searchBoxClick.click();
-        Thread.sleep(3000);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(twoWordSpellMistake);
+//        searchBoxClick.click();
+//        Thread.sleep(3000);
+        searchAction(twoWordSpellMistake);
         softAssert.assertEquals(spellCorrectWord.getText(),twoWordQuery,"Two word spell check error is not working.");
         if(spellCorrectWord.getText().equals(twoWordQuery)){System.out.println("Pass: Two words spell error is working as expected.");}
         else{ System.out.println("Fail: Two words spell error is not working as expected.");
@@ -421,11 +429,12 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testWhetherThreeWordsSpellErrorIsWorking() throws InterruptedException {
-        await();
-        searchBox.clear();
-        searchBox.fill().with(threeWordSpellMistake);
-        searchBoxClick.click();
-        Thread.sleep(2000);
+//        await();
+//        searchBox.clear();
+//        searchBox.fill().with(threeWordSpellMistake);
+//        searchBoxClick.click();
+//        Thread.sleep(2000);
+        searchAction(threeWordSpellMistake);
         softAssert.assertEquals(spellCorrectWord.getText(),threeWordQuery,"Three word spell check error is not working.");
         if(spellCorrectWord.getText().equals(threeWordQuery)){System.out.println("Pass: Three words spell error is working as expected.");}
         else{ System.out.println("Fail: Three words spell error is not working as expected.");}
@@ -645,6 +654,84 @@ public class Search_SiteActions extends Search_Page {
         awaitForPageToLoad();
         softAssert.assertEquals(awaitForElementPresence(placeHolder),"true");
         System.out.println("Test Case 2: Pass: searchBox PlaceHolder is getting Display");
+    }
+
+    public void testWhetherInfiniteScrollIsWorkingOrNot() throws Exception {
+        int scrollIteration=4;
+//        Set<String> ids = getDriver().getWindowHandles();
+//        Iterator <String> it = ids.iterator();
+//        String newWindow = it.next();
+//        getDriver().switchTo().window(newWindow);
+//        getDriver().get(infinitePageUrl);   /* open infinite page URL*/
+        openNewUrlInBrowser(infinitePageUrl);
+        //Thread.sleep(11000);
+        searchAction(searchQuery);
+        Select allPageSize=new Select(getDriver().findElement(By.xpath(sortByDropDownInfinteScroll)));
+        int totalProduct= getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
+        Thread.sleep(sleepTime);
+        JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+        for(int i=0;i<scrollIteration;i++) {
+            jse.executeScript("window.scrollBy(0,1000)");
+            Thread.sleep(sleepTime);
+            totalProduct = totalProduct + Integer.parseInt(allPageSize.getFirstSelectedOption().getText());
+        }
+        int totalProductAfterScrolling=getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
+        softAssert.assertEquals(totalProductAfterScrolling,totalProduct,"Fail: Infinite scroll is not working in search page");
+        if(totalProductAfterScrolling==totalProduct)
+            System.out.println("Pass: Infinite scroll is working in search page");
+        else
+            System.out.println("Fail: Infinite scroll is not working in search page");
+
+
+    }
+    public void testDisplayingAllProductsInCaseOfInfiniteScroll() throws InterruptedException {
+        searchAction(infiniteScrollSearchQuery);
+        Select allPageSize=new Select(getDriver().findElement(By.xpath(sortByDropDownInfinteScroll)));
+        List<WebElement>allOptions=allPageSize.getOptions();
+        allPageSize.selectByValue(allOptions.get(allOptions.size()-1).getAttribute("value"));
+        int searchResultNumber=totalSearchResult();
+       // System.out.println(searchResultNumber);
+        int selectPageSize=Integer.parseInt(allOptions.get(allOptions.size()-1).getText());
+        int scrollIteration=searchResultNumber/selectPageSize;
+        if(searchResultNumber%selectPageSize!=0)
+           scrollIteration++;
+        JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+        for(int i=0;i<scrollIteration;i++)
+        {
+            jse.executeScript("window.scrollBy(0,2000)");
+            Thread.sleep(sleepTime);
+//            //totalProduct = totalProduct + Integer.parseInt(allPageSize.getFirstSelectedOption().getText());
+//            if(i==scrollIteration-1 && flag==1)
+//            {
+//                totalProduct=totalProduct+addtionProducts;
+//            } else {
+//                totalProduct = totalProduct + Integer.parseInt(allPageSize.getFirstSelectedOption().getText());
+//            }
+        }
+        int totalProduct= getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
+        if(searchResultNumber==totalProduct)
+            System.out.println("Pass: Displaying all products in case of infinite scroll.");
+        else
+            System.out.println("Fail: all products is not getting displayed in case of infinite scroll.");
+
+    }
+
+    /* total search result on the page calculation methord*/
+    public int totalSearchResult()
+    {
+        String result = productDescription.getText();
+        String[] totalSrcResult = result.split("of");
+        int totalResult = Integer.parseInt(totalSrcResult[1].replace("products", "").replace(" ", ""));
+        return totalResult;
+    }
+
+    public void openNewUrlInBrowser(String newUrl)
+    {
+        Set<String> ids = getDriver().getWindowHandles();
+        Iterator <String> it = ids.iterator();
+        String newWindow = it.next();
+        getDriver().switchTo().window(newWindow);
+        getDriver().get(newUrl);
     }
 
 

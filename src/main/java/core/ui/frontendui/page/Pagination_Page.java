@@ -25,8 +25,10 @@ public class Pagination_Page extends UiBase {
 
     public String paginationArrowIcon="//button[@class='UNX-pageNavigation__button -action']";
     public String productPerPageDropDown="//select[@class='UNX-pageSize__dropdown']";
+
     @FindBy(xpath = "//span[@class='-pageDescription']")
     public FluentWebElement productDescription;
+
     @FindBy(xpath="//div[@class='UNX-pageNavigation__container']")
     public  FluentWebElement pagination;
     public static String paginations="//div[@class='UNX-pageNavigation__container']";

@@ -24,7 +24,7 @@ public class BaseTest extends FluentAdapter {
             BrowserInitializer initializer = new BrowserInitializer();
             initializer.init();
             driver = initializer.getDriver();
-           // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
         catch(Exception e)
         {

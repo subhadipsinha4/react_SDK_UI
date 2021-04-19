@@ -77,6 +77,8 @@ public class searchPage_Test extends BaseTest {
         search_SiteActions.testInCaseOfTwoPrices();
         search_SiteActions.testWhetherPriceIsDisplayingInTwoDecimalFormatAllOverTheSite();
         search_SiteActions.checkTotalNumberOfProductsInSearchedResultsPageAndAPI();
+        search_SiteActions.testWhetherInfiniteScrollIsWorkingOrNot();
+        search_SiteActions.testDisplayingAllProductsInCaseOfInfiniteScroll();
         
 
     }

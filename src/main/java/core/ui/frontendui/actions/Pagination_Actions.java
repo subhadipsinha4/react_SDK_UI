@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Pagination_Actions extends Pagination_Page {
     SoftAssert softAssert = new SoftAssert();
-
+    //int totalResult=0;
     //public Select sortList= new Select(getDriver().findElement(By.xpath(sortByDropdown)));
     //Select sortList;
 

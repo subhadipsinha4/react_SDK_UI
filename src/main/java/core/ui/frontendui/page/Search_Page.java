@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class Search_Page extends UiBase {
 
+    public int sleepTime=3000;
     @FindBy(xpath = "//input[@class='UNX-searchbox__input']")
     public FluentWebElement searchBox;
     public String UnbxdsearchBox="//input[@class='UNX-searchbox__input']";
@@ -17,7 +18,8 @@ public class Search_Page extends UiBase {
     public FluentWebElement searchBoxClick;
     @FindBy(xpath = "//span[@class='-query']")
     public FluentWebElement searchResultQuery;
-
+    public String searchQuery="*";
+    public String infiniteScrollSearchQuery="boot";
     @FindBy(xpath = "//div[@class='UNBXD-searchTitle__container']")
     public FluentWebElement searchResultFormat;
     @FindBy(xpath = "//div[@class='UNX-spellCheck__item']")
@@ -51,12 +53,13 @@ public class Search_Page extends UiBase {
     @FindBy(xpath = "//div[@class='UNX-products__container']//div[@class='-price']")
     public FluentWebElement ProductPrice;
     public String UnbxdProductPrice="//div[@class='-price']";
-
     public String perPageProduct="//select[@class='UNX-pageSize__dropdown']";
     @FindBy (xpath = "//a[@class='UNX-product-card UNX-grid-card']")
     public FluentWebElement productsPerPage;
     public String productsPerPageCount="//img[@data-uniqueid]";
     public String sortByDropdown="//select[@data-testid='UNX_unbxdSorter']";
+    public String sortByDropDownInfinteScroll="//select[@name='pageSize']";
+    public String pageSizeValue="5";
     //@FindBy(xpath="//div[@class='-details']//div")
     //public FluentWebElement productTitle;
     public String productTitle="//div[@class='-details']//div";
@@ -79,7 +82,7 @@ public class Search_Page extends UiBase {
     public String unbxdProductsTitle="//div[@class='-title']";
     public String productsPrice="//div[@class='-price']";
     public String productsStrickenPrice="//div[@class='-details']//div[@class='-price']//span[@class]";
-    public String productsImage="//div[@class='UNX-productCard__container']//img";
+    public String productsImage="//div[@class='UNX-productCard__container']";
     public String spellCorrectSingleWord="shirt";
     public String specialCharacterQuery="Shirt & jacket";
     public String twoWordQuery="red shirt";
@@ -92,5 +95,6 @@ public class Search_Page extends UiBase {
     public String unbxdColorQuerySearch="Red top";
     public String baseURL="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=red";
     public String baseURL2="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=";
+    public String infinitePageUrl="https://5j1xw.csb.app/";
 
 }
