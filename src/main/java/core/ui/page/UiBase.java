@@ -3,18 +3,25 @@ package core.ui.page;
 import static lib.constants.UnbxdConstants.SELENIUM_MAXTIMEOUT;
 import static lib.constants.UnbxdConstants.SELENIUM_MINTIMEOUT;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
+
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.FileUtils;
 import org.fluentlenium.core.Fluent;
 import org.fluentlenium.core.FluentPage;
 import org.fluentlenium.core.action.FluentDefaultActions;
 import org.fluentlenium.core.domain.FluentList;
 import org.fluentlenium.core.domain.FluentWebElement;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -25,6 +32,9 @@ import com.google.common.base.Function;
 public class UiBase extends FluentPage{
 
     private static final String CONFIG_FILE = "config.properties";
+
+
+
 
     @FindBy(css = ".Select-menu-outer .Select-menu .Select-option")
     public FluentList<FluentWebElement> highlightedSearchResults;
@@ -453,6 +463,12 @@ public class UiBase extends FluentPage{
         }
 
 
+    }
+
+    public void takeScreenshotAtEndOfTest() throws IOException {
+        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        String currentDir = System.getProperty("user.dir");
+        FileUtils.copyFile(scrFile, new File(currentDir + "/screenshots/" + System.currentTimeMillis() + ".png"));
     }
 
 }

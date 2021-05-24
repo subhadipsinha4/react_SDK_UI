@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.print.Book;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,7 @@ public class Search_SiteActions extends Search_Page {
 
     SoftAssert softAssert = new SoftAssert();
 
+
     public Search_SiteActions goToWebsite(String url) {
         getDriver().navigate().to(url);
         awaitForPageToLoad();
@@ -40,12 +42,10 @@ public class Search_SiteActions extends Search_Page {
         return this;
     }
 
-    public void searchBoxPresentOrNot()
-    {
-        await();
+    public void searchBoxPresentOrNot() throws IOException {
         softAssert.assertEquals(awaitForElementPresence(searchBox),"true");
         System.out.println("Test Case 1: Pass: search Box is Present");
-        await();
+        //takeScreenshotAtEndOfTest();
     }
 
     public void searchAction(String query) throws InterruptedException {
@@ -172,11 +172,12 @@ public class Search_SiteActions extends Search_Page {
 
     }
 
-    public void testUIofListViewPage() throws InterruptedException {
+    public void testUIofListViewPage() throws InterruptedException, IOException {
         System.out.println("--------------------------------------------------");
         System.out.println("Test whether all the Ui elements of List view are loaded or not");
         System.out.println("--------------------------------------------------");
         checkUnbxdAttribute();
+
         System.out.println("--------------------------------------------------");
     }
 
@@ -191,7 +192,7 @@ public class Search_SiteActions extends Search_Page {
 
     }
 
-    public void testUIofGridViewPage() throws InterruptedException {
+    public void testUIofGridViewPage() throws InterruptedException, IOException {
         System.out.println("--------------------------------------------------");
         System.out.println("Test whether all the Ui elements of Grid view are loaded or not");
         System.out.println("--------------------------------------------------");
@@ -316,11 +317,6 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void searchUsingUniqueId() throws InterruptedException {
-//        await();
-//        searchBox.clear();
-//        searchBox.fill().with(uniqueId);
-//        searchBoxClick.click();
-//        Thread.sleep(2500);
         searchAction(uniqueId);
         softAssert.assertEquals(uniqueIDPath.getAttribute("data-uniqueid"),uniqueId);
         if(uniqueIDPath.getAttribute("data-uniqueid").equals(uniqueId)) {
@@ -394,12 +390,12 @@ public class Search_SiteActions extends Search_Page {
 
     }
 
-    public void singleWordSpellErrorIsWorking()
-    {
-        await();
-        softAssert.assertEquals(spellCorrectWord.getText(),spellCorrectSingleWord,"Spell correct for single word is not working well");
-        if(spellCorrectWord.getText().equals(spellCorrectSingleWord)){System.out.println("Test Case 21: Pass: Spell correct for single word is working well");}
-        else{System.out.println("Test Case 21: Fail: Spell correct for single word is not working well");}
+    public void singleWordSpellErrorIsWorking() throws InterruptedException {
+        searchAction(spellMistakeSingleWorld);
+        Response resp;
+        resp=given().get(spellErrorUrl+spellMistakeSingleWorld);
+        String spellCurrectSuggestion=resp.jsonPath().getString("didYouMean.suggestion").replace( "[","" ).replace( "]","" );
+        Assert.assertEquals(spellCorrectWord.getText(),spellCurrectSuggestion,"Spell correct for single word is not working well");
 
 
     }
@@ -416,31 +412,24 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testWhetherTwoWordsSpellErrorIsWorking() throws InterruptedException {
-//        await();
-//        searchBox.clear();
-//        searchBox.fill().with(twoWordSpellMistake);
-//        searchBoxClick.click();
-//        Thread.sleep(3000);
         searchAction(twoWordSpellMistake);
-        softAssert.assertEquals(spellCorrectWord.getText(),twoWordQuery,"Two word spell check error is not working.");
-        if(spellCorrectWord.getText().equals(twoWordQuery)){System.out.println("Pass: Two words spell error is working as expected.");}
-        else{ System.out.println("Fail: Two words spell error is not working as expected.");
-        }
+        Response resp;
+        resp=given().get(spellErrorUrl+twoWordSpellMistake);
+        String spellCurrectSuggestion=resp.jsonPath().getString("didYouMean.suggestion").replace( "[","" ).replace( "]","" );
+        Assert.assertEquals(spellCorrectWord.getText(),spellCurrectSuggestion,"Two word spell check error is not working.");
+
+
     }
 
     public void testWhetherThreeWordsSpellErrorIsWorking() throws InterruptedException {
-//        await();
-//        searchBox.clear();
-//        searchBox.fill().with(threeWordSpellMistake);
-//        searchBoxClick.click();
-//        Thread.sleep(2000);
         searchAction(threeWordSpellMistake);
-        softAssert.assertEquals(spellCorrectWord.getText(),threeWordQuery,"Three word spell check error is not working.");
-        if(spellCorrectWord.getText().equals(threeWordQuery)){System.out.println("Pass: Three words spell error is working as expected.");}
-        else{ System.out.println("Fail: Three words spell error is not working as expected.");}
+        Response resp=given().get(spellErrorUrl+threeWordSpellMistake);
+        String spellCurrectSuggestion=resp.jsonPath().getString("didYouMean.suggestion").replace( "[","" ).replace( "]","" );
+        Assert.assertEquals(spellCorrectWord.getText(),spellCurrectSuggestion,"Three word spell check error is not working.");
+
     }
 
-    public void testWhetherAllTheUiElementsAreLoadedOrNot() throws InterruptedException {
+    public void testWhetherAllTheUiElementsAreLoadedOrNot() throws InterruptedException, IOException {
         System.out.println("--------------------------------------------------");
         System.out.println("Test whether all the Ui elements are loaded or not");
         System.out.println("--------------------------------------------------");
@@ -448,7 +437,7 @@ public class Search_SiteActions extends Search_Page {
         System.out.println("----------------------------------------------------");
     }
 
-    private void checkUnbxdAttribute() throws InterruptedException {
+    private void checkUnbxdAttribute() throws InterruptedException, IOException {
         searchAction(lowerCaseQuery);
         //softAssert.assertTrue(searchResultQuery.isDisplayed(),"Search result query is not getting displayed.");
         if(searchResultQuery.isDisplayed()){System.out.println("Pass: Search result query is getting displayed on SRP.");}
@@ -477,6 +466,8 @@ public class Search_SiteActions extends Search_Page {
         if(productContainer.isDisplayed()){System.out.println("Pass: Product list is getting displayed on SRP.");}
         else{System.out.println("Fail: Product list is not getting displayed on SRP.");}
         //softAssert.assertTrue(productContainer.isDisplayed(),"Product list is not getting displayed");
+        takeScreenshotAtEndOfTest();
+
     }
 
     public void checkProductAttributesAreDisplayingOrNot() {
@@ -517,9 +508,6 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testInCaseOfTwoPrices() throws InterruptedException {
-        //System.out.println("---------------------------------------------------");
-        //System.out.println("Test in case of two prices");
-        //System.out.println("---------------------------------------------------");
         searchAction(lowerCaseQuery);
         List<WebElement> allProductStrickenPrice=getDriver().findElements(By.xpath(UnbxdStrickenPrice));
         List<WebElement> allProductPrice=getDriver().findElements(By.xpath(UnbxdProductPrice));
@@ -550,41 +538,21 @@ public class Search_SiteActions extends Search_Page {
         else
             System.out.println("Pass: Price is displaying in two decimal format all over the site");
     }
-
-
-
-//
-    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException {
-//        int match=0;
-//        searchAction(unbxdColorQuerySearch);
-//        Response response=given().get(baseURL);
-//        ResponseBody body = response.getBody();
-//        List<String> c=body.jsonPath().getList("response.products.variants.v_color");
-//
-//        //List<String> title=response.jsonPath().get("response.products.title");
-//
-//
-////        for(int i=0;i<colors.size();i++) {
-////            if (unbxdColorQuerySearch.contains(colors.get(i))) {
-////                match++;
-////                System.out.println("Matched product title: ["+title.get(i)+" color: ["+colors.get(i)+"]");
-////            }
-////            else{
-////                System.out.println("Fail: Results are not getting displaying as per the searched term in terms of color, for query: "+ unbxdColorQuerySearch);
-////                System.out.println("Mismatched product position: "+match+" product title["+title.get(i)+"]");
-////                break;
-////            }
-////
-////        }
-        int f=1;
-        List<WebElement>allProductsTitle=getDriver().findElements(By.xpath(unbxdProductsTitle));
-        for(WebElement e: allProductsTitle)
-        {
-            if(e.getText().equalsIgnoreCase("red")==true) f=0;
-            else{f=1;break;}
+    public void testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor() throws InterruptedException, IOException {
+        int scrollIteration=2;
+        searchAction(unbxdColorQuerySearch);
+        JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+        for(int i=0;i<scrollIteration;i++) {
+            takeScreenshotAtEndOfTest();
+            jse.executeScript("window.scrollBy(0,500)");
         }
-        if(f==0)System.out.println("Pass: Search terms is getting displayed on product title in terms of color");
-        else System.out.println("Fail: Search terms is not getting displayed on product title in terms of color");
+        takeScreenshotAtEndOfTest();
+        Response resp=given().get(baseURL+unbxdColorQuerySearch);
+        String colors=resp.jsonPath().getString("response.products.variants.v_StandardColor1").replace( "[" ,"").replace( "]","" ).replace( ",","" );
+        String[] colorList=colors.split( "\\W+" );
+        for(int i=0;i<colorList.length;i++) {
+            Assert.assertTrue( unbxdColorQuerySearch.toUpperCase().contains( colorList[i].toUpperCase() ) );
+        }
 
     }
 
@@ -601,6 +569,70 @@ public class Search_SiteActions extends Search_Page {
             System.out.println("Pass: Total number Of products in searched results page and API is same");
         }else{
             System.out.println("Pass: Total number Of products in searched results page and API is not same");
+        }
+
+    }
+
+    public void testSingleWordSpellErrorIsWorking()
+    {
+        Response resp;
+        resp=given().get(spellErrorUrl);
+        String spellCurrectSuggestion=resp.jsonPath().getString("didYouMean.suggestion");
+        System.out.println(spellCurrectSuggestion.replace( "[","" ).replace( "]","" ));
+
+
+    }
+
+    public void checkSearchForSKU_with_Hash_As_Prefix() throws InterruptedException {
+        searchAction( "#"+uniqueId );
+        Assert.assertEquals( getProductDetails.getAttribute( "data-uniqueid" ), uniqueId, "Search with SKU with # as prefix is not working." );
+
+    }
+
+    public void checkQuickViewIsPresentOrNot(String query) throws InterruptedException {
+        searchAction( query );
+        Assert.assertTrue(quickView.isDisplayed(),"Quick view is not getting displayed");
+
+    }
+
+    public void checkAddToCartIsPresentOrNot(String query) throws InterruptedException {
+        searchAction( query );
+        Assert.assertTrue( addToCartSRP.isDisplayed(),"Add to cart button is not getting displayed" );
+
+    }
+
+    public void checkColorSwitch(String query) throws InterruptedException {
+        searchAction( query );
+        Assert.assertTrue( colorSwitch.isDisplayed(),"Color switch is not getting displayed." );
+    }
+
+
+// need more info
+    public void checkColorSwitchIsWorkingOrNot(String query) throws InterruptedException {
+        searchAction( query );
+        List<WebElement> allSwitchItems=getDriver().findElements( By.xpath( unbxdColorSwitch ) );
+        //List<WebElement> allProductImages=getDriver().findElements( By.xpath( unbxdProductImgURL ) );
+        //Color Switch is checking for all product present in the SRP
+        //for(int i=0;i<allSwitchItems.size();i++) //List of all color variant.
+        for(int i=0;i<2;i++) //Checking only for two variant
+        {
+            allSwitchItems.get( i ).click();  // Click single color variant
+            String switchedItemUrl=allSwitchItems.get( i ).getAttribute( "src" ); // Store selected color variant url value
+            List<WebElement> allProductImages=getDriver().findElements( By.xpath( unbxdProductUrlImageLink ) );
+            //Assert.assertTrue(allProductImages.contains( switchedItemUrl ));
+            for(int j=0;j<allProductImages.size();j++) // List of product image in SRP
+            {
+                if(allProductImages.get( j ).getAttribute( "src" ).equals( switchedItemUrl )){
+                        System.out.println("> "+allSwitchItems.get( j ).getAttribute( "src" ));
+                }
+//                try {
+//                    Assert.assertTrue( allProductImages.get( j ).getAttribute( "src" ).equals( switchedItemUrl ), "Color switch is not working." );
+//                }catch (Exception e) {e.getMessage();}
+//                finally {
+//                    continue;
+//                }
+            }
+
         }
 
     }
@@ -657,35 +689,29 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testWhetherInfiniteScrollIsWorkingOrNot() throws Exception {
-        int scrollIteration=4;
-//        Set<String> ids = getDriver().getWindowHandles();
-//        Iterator <String> it = ids.iterator();
-//        String newWindow = it.next();
-//        getDriver().switchTo().window(newWindow);
-//        getDriver().get(infinitePageUrl);   /* open infinite page URL*/
-        openNewUrlInBrowser(infinitePageUrl);
-        //Thread.sleep(11000);
-        searchAction(searchQuery);
+        int scrollIteration=2;
+        searchAction(infiniteScrollQuery);
         Select allPageSize=new Select(getDriver().findElement(By.xpath(sortByDropDownInfinteScroll)));
         int totalProduct= getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
         Thread.sleep(sleepTime);
         JavascriptExecutor jse = (JavascriptExecutor)getDriver();
-        for(int i=0;i<scrollIteration;i++) {
-            jse.executeScript("window.scrollBy(0,1000)");
+        //for(int i=0;i<scrollIteration;i++) {
+            jse.executeScript("window.scrollBy(0,4000)");
             Thread.sleep(sleepTime);
             totalProduct = totalProduct + Integer.parseInt(allPageSize.getFirstSelectedOption().getText());
-        }
+        //}
         int totalProductAfterScrolling=getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
-        softAssert.assertEquals(totalProductAfterScrolling,totalProduct,"Fail: Infinite scroll is not working in search page");
-        if(totalProductAfterScrolling==totalProduct)
-            System.out.println("Pass: Infinite scroll is working in search page");
-        else
-            System.out.println("Fail: Infinite scroll is not working in search page");
+        //softAssert.assertEquals(totalProductAfterScrolling,totalProduct,"Fail: Infinite scroll is not working in search page");
+        Assert.assertTrue(totalProductAfterScrolling>totalProduct,"infinite scroll is not working." );
+//        if(totalProductAfterScrolling>totalProduct)
+//            System.out.println("Pass: Infinite scroll is working in search page");
+//        else
+//            System.out.println("Fail: Infinite scroll is not working in search page");
 
 
     }
     public void testDisplayingAllProductsInCaseOfInfiniteScroll() throws InterruptedException {
-        searchAction(infiniteScrollSearchQuery);
+        searchAction(infiniteScrollQuery);
         Select allPageSize=new Select(getDriver().findElement(By.xpath(sortByDropDownInfinteScroll)));
         List<WebElement>allOptions=allPageSize.getOptions();
         allPageSize.selectByValue(allOptions.get(allOptions.size()-1).getAttribute("value"));
@@ -709,10 +735,11 @@ public class Search_SiteActions extends Search_Page {
 //            }
         }
         int totalProduct= getDriver().findElements(By.xpath(UnbxdProductContainer)).size();
-        if(searchResultNumber==totalProduct)
-            System.out.println("Pass: Displaying all products in case of infinite scroll.");
-        else
-            System.out.println("Fail: all products is not getting displayed in case of infinite scroll.");
+        Assert.assertTrue( searchResultNumber==totalProduct, "all products is not getting displayed in case of infinite scroll." );
+//        if(searchResultNumber==totalProduct)
+//            System.out.println("Pass: Displaying all products in case of infinite scroll.");
+//        else
+//            System.out.println("Fail: all products is not getting displayed in case of infinite scroll.");
 
     }
 

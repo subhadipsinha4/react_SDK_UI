@@ -79,6 +79,8 @@ public class Search_Page extends UiBase {
     public String spellMistakeSingleWorld="swirt";
     @FindBy(xpath = "//span[@data-testid='UNX_spellCheck']")
     public FluentWebElement spellCorrectWord;
+    @FindBy(xpath = "//div[@class='UNX-productCard__container']//a")
+    public FluentWebElement getProductDetails;
     public String unbxdProductsTitle="//div[@class='-title']";
     public String productsPrice="//div[@class='-price']";
     public String productsStrickenPrice="//div[@class='-details']//div[@class='-price']//span[@class]";
@@ -92,9 +94,23 @@ public class Search_Page extends UiBase {
     public String twoWordSpellMistake="Rod Shrt";
     public String threeWordSpellMistake="Mam Biue Shiet";
     public String UnbxdStrickenPrice="//span[@class='-strike']";
-    public String unbxdColorQuerySearch="Red top";
-    public String baseURL="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=red";
+    public String unbxdColorQuerySearch="white dress";
+    public String baseURL="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=";
     public String baseURL2="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=";
     public String infinitePageUrl="https://5j1xw.csb.app/";
+    public static String infiniteScrollURl="https://j56sm.csb.app/";
+    public String infiniteScrollQuery="Black shoes";
+    public String spellErrorUrl="https://search.unbxd.io/1c8c3ff5d59cf85f256311199bad47bc/prod-cookieskids-com808271562744920/search?q=";
+    public static String  urlQuickViewAddToCart="https://c7ff5.csb.app/";
+    public static String urlColorVar="https://0o84m.csb.app/";
+    @FindBy(xpath = "//div[@class='-quickView']")
+    public FluentWebElement quickView;
+    @FindBy(xpath = "//div[@class='-addToCart']")
+    public FluentWebElement addToCartSRP;
+    @FindBy(xpath = "//div[@class='-swatch__container']")
+    public FluentWebElement colorSwitch;
+    public String unbxdColorSwitch="//div[@class='UNX-swatch__item']//img";
+    public String unbxdProductImgURL="//div[@class='details']//img";
+    public String unbxdProductUrlImageLink="//a//img[@src]";
 
 }

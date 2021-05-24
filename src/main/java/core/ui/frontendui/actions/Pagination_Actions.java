@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import javax.xml.ws.WebEndpoint;
@@ -212,15 +213,15 @@ public class Pagination_Actions extends Pagination_Page {
     }
 
     public void testWhetherFooterPaginationIsWorkingOrNot(){
-        await();
+
         List<WebElement>paginationForwordKeys=getDriver().findElements(By.xpath(paginationForwordKey));
         int oldPageNo=Integer.parseInt(currentPage.getText());
         paginationForwordKeys.get(1).click();
-        softAssert.assertEquals(Integer.parseInt(currentPage.getText()),oldPageNo+1,"Fail: Footer pagination is not working");
-        if(Integer.parseInt(currentPage.getText())==oldPageNo+1)
-            System.out.println("Pass: Footer pagination is working.");
-        else
-            System.out.println("Fail: Footer pagination is not working.");
+        Assert.assertEquals(Integer.parseInt(currentPage.getText()),oldPageNo+1,"Fail: Footer pagination is not working");
+//        if(Integer.parseInt(currentPage.getText())==oldPageNo+1)
+//            System.out.println("Pass: Footer pagination is working.");
+//        else
+//            System.out.println("Fail: Footer pagination is not working.");
     }
 
     public void testCaseOfOnePageResults() throws InterruptedException {
