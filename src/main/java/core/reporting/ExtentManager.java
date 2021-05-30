@@ -7,13 +7,13 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentManager {
 
-    private static ExtentReports extent;
+    private static ExtentReports extent=null;
 
 
     public synchronized static ExtentReports getInstance() {
         if (extent == null)
             createInstance("extent.html");
-        return extent;
+            return extent;
     }
 
 
@@ -21,10 +21,10 @@ public class ExtentManager {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
         htmlReporter.config().setChartVisibilityOnOpen(true);
-        htmlReporter.config().setDocumentTitle("Unbxd-Console-UI-ExtentReports");
-        htmlReporter.config().setReportName("UNBXD Console UI Automation Report");
+        htmlReporter.config().setDocumentTitle("Unbxd-SDK-V2-UI-ExtentReports");
+        htmlReporter.config().setReportName("UNBXD SDK V2 UI Automation Report");
         htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
-        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setTheme(Theme.STANDARD);
         htmlReporter.config().setEncoding("utf-8");
 
         extent = new ExtentReports();
@@ -32,4 +32,7 @@ public class ExtentManager {
         extent.setReportUsesManualConfiguration(true);
         return extent;
     }
+
+
+
 }

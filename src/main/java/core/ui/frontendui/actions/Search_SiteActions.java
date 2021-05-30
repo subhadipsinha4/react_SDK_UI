@@ -43,7 +43,7 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void searchBoxPresentOrNot() throws IOException {
-        softAssert.assertEquals(awaitForElementPresence(searchBox),"true");
+        Assert.assertTrue(awaitForElementPresence(searchBox),"Search box is not getting dislayed");
         System.out.println("Test Case 1: Pass: search Box is Present");
         //takeScreenshotAtEndOfTest();
     }
@@ -77,15 +77,16 @@ public class Search_SiteActions extends Search_Page {
         getDriver().findElement(By.xpath(UnbxdsearchBox)).sendKeys(query,Keys.ENTER);
         await();
         awaitForPageToLoad();
-        softAssert.assertEquals(searchResultQuery.getText(),query);
+        Assert.assertEquals(searchResultQuery.getText(),query);
         System.out.println("Test Case 3: Pass: Search query is getting display for enter query.");
 
 
     }
 
-    public  void testSearchedResultsMessageFormat() throws InterruptedException {
+    public  void testSearchedResultsMessageFormat(String query) throws InterruptedException {
+        searchAction( query );
         Thread.sleep(2000);
-        softAssert.assertEquals(searchResultFormat.getText(),"Results for -");
+        Assert.assertEquals(searchResultFormat.getText(),"Results for -");
         if(searchResultFormat.getText().contains("Results for -")) {
             System.out.println("Test Case 5: Pass: Searched Results Message Format is correct");
         }else{ System.out.println("Test Case 5: Fail: Searched Results Message Format is not correct");
@@ -99,7 +100,7 @@ public class Search_SiteActions extends Search_Page {
 //        searchBoxClick.click();
 //        Thread.sleep(2500);
         searchAction(invQuery);
-        softAssert.assertEquals(awaitForElementPresence(noResultFound),"true","Zero Result page is getting displayed");
+        Assert.assertEquals(awaitForElementPresence(noResultFound),"true","Zero Result page is getting displayed");
         if(awaitForElementPresence(noResultFound)) {
             System.out.println("Test Case 19: Pass: Zero result page is getting displayed");
         }else{            System.out.println("Test Case 19: Fail: Zero result page is not getting displayed");
@@ -116,7 +117,7 @@ public class Search_SiteActions extends Search_Page {
         searchBoxClick.click();
         Thread.sleep(3000);
         String newUrl= getDriver().getCurrentUrl();
-        softAssert.assertEquals(oldURl,newUrl,"Fail: Search is working while search box is empty");
+        Assert.assertEquals(oldURl,newUrl,"Fail: Search is working while search box is empty");
         if(oldURl.equals(newUrl)) {
             System.out.println("Test Case 15: Pass: don't Enter Query Click SearchIcon");
         }else{System.out.println("Test Case 15: Fail: don't Enter Query Click SearchIcon, but search is working.");}
@@ -128,7 +129,7 @@ public class Search_SiteActions extends Search_Page {
         String oldURl= getDriver().getCurrentUrl();
         getDriver().findElement(By.xpath(UnbxdsearchBox)).sendKeys(Keys.ENTER);
         String newUrl= getDriver().getCurrentUrl();
-        softAssert.assertEquals(oldURl,newUrl);
+        Assert.assertEquals(oldURl,newUrl);
         if(oldURl.equals(newUrl)) {
             System.out.println("Test Case 16: Pass: don't Enter Query press Enter key");
         }else{            System.out.println("Test Case 16: Fail: don't Enter Query press Enter key,but search is working");
@@ -141,7 +142,7 @@ public class Search_SiteActions extends Search_Page {
         searchBox.fill().with(query);
         searchBoxClick.click();
         Thread.sleep(2000);
-        softAssert.assertEquals(searchResultQuery.getText(),query,"Search icon click is not working");
+        Assert.assertEquals(searchResultQuery.getText(),query,"Search icon click is not working");
         if(searchResultQuery.getText().equals(query)){System.out.println("Test Case 4: Pass: Search icon click is working");}
         else{System.out.println("Test Case 4: Fail: Search icon click is not working");}
 
@@ -156,16 +157,16 @@ public class Search_SiteActions extends Search_Page {
         if(awaitForElementPresence(listViewClick)){System.out.println("Test Case 7: Pass: List View is getting displayed");}
         else{System.out.println("Test Case 7: Fail: List View is getting displayed");}
         awaitForPageToLoad();
-        softAssert.assertEquals(awaitForElementPresence(gridViewClick),"true","Grid view is not getting displayed.");
+        Assert.assertEquals(awaitForElementPresence(gridViewClick),"true","Grid view is not getting displayed.");
         if(awaitForElementPresence(gridViewClick)){System.out.println("Test Case 7: Pass: Grid View is getting displayed");}
         else{System.out.println("Test Case 7: Fail: Grid View is getting displayed");}
 
     }
-    public void testListViewClick() {
-        await();
+    public void testListViewClick(String query) throws InterruptedException {
+        searchAction( query );
         listViewClick.click();
         awaitForPageToLoad();
-        softAssert.assertEquals(listViewClick.getAttribute(viewValidate),ClickViewExpected,"List view click is not working.");
+        Assert.assertEquals(listViewClick.getAttribute(viewValidate),ClickViewExpected,"List view click is not working.");
         if(listViewClick.getAttribute(viewValidate).equals(ClickViewExpected)){System.out.println("Test Case 8: Pass: list view click is working.");}
         else{System.out.println("Test Case 8: Fail: list view click is working.");}
 
@@ -181,11 +182,11 @@ public class Search_SiteActions extends Search_Page {
         System.out.println("--------------------------------------------------");
     }
 
-    public void testGridViewClick() {
-        await();
+    public void testGridViewClick(String query) throws InterruptedException {
+        searchAction( query );
         gridViewClick.click();
         awaitForPageToLoad();
-        softAssert.assertEquals(gridViewClick.getAttribute(viewValidate),ClickViewExpected,"Grid view click is not working.");
+        Assert.assertEquals(gridViewClick.getAttribute(viewValidate),ClickViewExpected,"Grid view click is not working.");
         if(gridViewClick.getAttribute(viewValidate).equals(ClickViewExpected))System.out.println("Test Case 9: Pass: grid view click is working.");
         else System.out.println("Test Case 9: Fail: grid view click is working.");
 
@@ -200,9 +201,9 @@ public class Search_SiteActions extends Search_Page {
         System.out.println("--------------------------------------------------");
     }
 
-    public void testNumberOfProductsOnGridViewAndListView() throws InterruptedException {
+    public void testNumberOfProductsOnGridViewAndListView(String query) throws InterruptedException {
         int gcount=0,lcount=0;
-        await();
+        searchAction( query );
         List<WebElement> title1=getDriver().findElements(By.xpath(productsPerPageCount));
         for(WebElement e: title1)
             gcount++;
@@ -211,20 +212,20 @@ public class Search_SiteActions extends Search_Page {
         List<WebElement> title2=getDriver().findElements(By.xpath(productsPerPageCount));
         for(WebElement e: title2)
             lcount++;
-        softAssert.assertEquals(gcount,lcount,"Number of product per page in grid view is not same compare to list view");
+        Assert.assertEquals(gcount,lcount,"Number of product per page in grid view is not same compare to list view");
         if(gcount==lcount){System.out.println("Test Case 14: Pass: Equal number of products present on gridView And listView ");}
         else{System.out.println("Test Case 14: Fail: Equal number of products is not present on gridView And listView ");}
 
 
     }
 
-    public void testFilterSelectionInCaseOfGridViewAndMoveToListViewPage() throws InterruptedException {
-        await();
+    public void testFilterSelectionInCaseOfGridViewAndMoveToListViewPage(String query) throws InterruptedException {
+        searchAction( query );
         colorFacet.click();Thread.sleep(2000);
         String productdescriptionGrid=productDescription.getText();
         listViewClick.click(); Thread.sleep(2000);
         String productdescriptionList=productDescription.getText();
-        softAssert.assertEquals(productdescriptionGrid,productdescriptionList,"Fail: Same set of product is not getting displayed after move to list view.");
+        Assert.assertEquals(productdescriptionGrid,productdescriptionList,"Fail: Same set of product is not getting displayed after move to list view.");
         if(productdescriptionGrid.equals(productdescriptionList)) {
             System.out.println("Test Case 12: Pass: Same set of product is getting displayed after move to the list view.");
         }else{System.out.println("Test Case 12: Fail: Same set of product is not getting displayed after move to the list view.");
@@ -234,15 +235,15 @@ public class Search_SiteActions extends Search_Page {
 
     }
 
-    public void testFilterSelectionInCaseOfListViewAndMoveToGridViewPage() throws InterruptedException {
-        await();
+    public void testFilterSelectionInCaseOfListViewAndMoveToGridViewPage(String query) throws InterruptedException {
+        searchAction( query );
         colorFacet.click();
         Thread.sleep(2000);
         String productdescriptionList=productDescription.getText();
         gridViewClick.click();
         Thread.sleep(2000);
         String productdescriptionGrid=productDescription.getText();
-        softAssert.assertEquals(productdescriptionGrid,productdescriptionList,"Fail: Same set of product is not getting displayed after move to grid view.");
+        Assert.assertEquals(productdescriptionGrid,productdescriptionList,"Fail: Same set of product is not getting displayed after move to grid view.");
         if(productdescriptionGrid.equals(productdescriptionList)) {
             System.out.println("Test Case 13: Pass: Same set of product is getting displayed after move to the grid view.");
         }else{ System.out.println("Test Case 13: Fail: Same set of product is not getting displayed after move to the grid view.");
@@ -259,7 +260,7 @@ public class Search_SiteActions extends Search_Page {
 //        searchBoxClick.click();
 //        Thread.sleep(3000);
         searchAction(threeWordQuery);
-        softAssert.assertEquals(searchResultQuery.getText(),twoWordQuery);
+        Assert.assertEquals(searchResultQuery.getText(),twoWordQuery);
         if(searchResultQuery.getText().equalsIgnoreCase(threeWordQuery)){
             System.out.println("Pass: Spacing between more than three word is working as expecting on SRP");
         }else{
@@ -271,21 +272,19 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testSpacingBetweenTwoWords() throws InterruptedException {
-        await();
         searchBox.clear();
         getDriver().findElement(By.xpath(UnbxdsearchBox)).sendKeys(twoWordQuery+Keys.ENTER);
         Thread.sleep(3000);
-        //softAssert.assertTrue(searchResultQuery.getText().equals(twoWordQuery));
+        Assert.assertTrue(searchResultQuery.getText().equals(twoWordQuery));
         if(searchResultQuery.getText().equals(twoWordQuery)){
         System.out.println("Pass: Spacing between two word is working as expecting on SRP");}
         else {         System.out.println("Fail: Spacing between two word is working as expecting on SRP");
     }
     }
 
-    public void strickenPriceIsDisplayOrNot()
-    {
-        await();
-        softAssert.assertEquals(awaitForElementPresence(strickenPrice),"true","Stricken price is not getting displayed");
+    public void strickenPriceIsDisplayOrNot(String query) throws InterruptedException {
+        searchAction( query );
+        Assert.assertEquals(awaitForElementPresence(strickenPrice),"true","Stricken price is not getting displayed");
         if(awaitForElementPresence(strickenPrice)) {
             System.out.println("Test Case 6: Pass: Stricken Price is getting display");
         }else{            System.out.println("Test Case 6: Fail: Stricken Price is getting display");
@@ -301,7 +300,7 @@ public class Search_SiteActions extends Search_Page {
 //        Thread.sleep(3000);
         searchAction(blankSpace);
         String newUrl=getDriver().getCurrentUrl();
-        softAssert.assertEquals(oldUrl,newUrl,"Fail: Search is working for blank space.");
+        Assert.assertEquals(oldUrl,newUrl,"Fail: Search is working for blank space.");
         if(oldUrl.equals(newUrl)) {
             System.out.println("Test Case 17: Pass: For blank space search is not working.");
         }else{            System.out.println("Test Case 17: Fail: For blank space search is working, it should not work");
@@ -318,7 +317,7 @@ public class Search_SiteActions extends Search_Page {
 
     public void searchUsingUniqueId() throws InterruptedException {
         searchAction(uniqueId);
-        softAssert.assertEquals(uniqueIDPath.getAttribute("data-uniqueid"),uniqueId);
+        Assert.assertEquals(uniqueIDPath.getAttribute("data-uniqueid"),uniqueId);
         if(uniqueIDPath.getAttribute("data-uniqueid").equals(uniqueId)) {
             System.out.println("Test Case 18: Pass: Search using uniqueId is working fine");
         }else{ System.out.println("Test Case 18: Fail: Search using uniqueId is not working fine");
@@ -334,7 +333,7 @@ public class Search_SiteActions extends Search_Page {
 //        searchBoxClick.click();
 //        Thread.sleep(3000);
         searchAction(specialCharacterQuery);
-        softAssert.assertEquals(searchResultQuery.getText(),specialCharacterQuery,"Search using special characcter is not working.");
+        Assert.assertEquals(searchResultQuery.getText(),specialCharacterQuery,"Search using special characcter is not working.");
         if(searchResultQuery.getText().equals(specialCharacterQuery)) {
             System.out.println("Pass: Search using special characters is working as expected.");
         }else{            System.out.println("Fail: Search using special characters is working as expected.");
@@ -346,7 +345,7 @@ public class Search_SiteActions extends Search_Page {
         searchBox.clear();
         getDriver().findElement(By.xpath(UnbxdsearchBox)).sendKeys(unbxdSearchQuery+Keys.ENTER);
         Thread.sleep(3000);
-        softAssert.assertEquals(searchResultQuery.getText(),unbxdSearchQuery,"Enter Query and search result query is not same");
+        Assert.assertEquals(searchResultQuery.getText(),unbxdSearchQuery,"Enter Query and search result query is not same");
         if(searchResultQuery.getText().equals(unbxdSearchQuery)) {
             System.out.println("Pass: Search using enter key is working as expected,entered query is getting displayed on search result.");
         }else{         System.out.println("Fail: Search using enter key is working as expected,entered query is getting displayed on search result.");
@@ -359,7 +358,7 @@ public class Search_SiteActions extends Search_Page {
         searchBox.clear();
         getDriver().findElement(By.xpath(UnbxdsearchBox)).sendKeys(combinationQuery+Keys.ENTER);
         Thread.sleep(3000);
-        softAssert.assertEquals(searchResultQuery.getText(),combinationQuery,"Combination of lower case and upper case query search is not working.");
+        Assert.assertEquals(searchResultQuery.getText(),combinationQuery,"Combination of lower case and upper case query search is not working.");
         if(searchResultQuery.getText().equals(combinationQuery)){System.out.println("Pass: Combination of lower and upper case query search is working as expected.");}
         else{System.out.println("Fail: Combination of lower and upper case query search is not working as expected.");}
     }
@@ -371,7 +370,7 @@ public class Search_SiteActions extends Search_Page {
 //        searchBoxClick.click();
 //        Thread.sleep(3000);
         searchAction(lowerCaseQuery);
-        softAssert.assertTrue(searchResultQuery.getText().equals("ShiRT"));
+        Assert.assertTrue(searchResultQuery.getText().equals("ShiRT"));
         if(searchResultQuery.getText().equals(lowerCaseQuery)){            System.out.println("Pass: Search is lower case test is working as expected.");
             }else {System.out.println("Fail: Search is lower case test is working as expected.");}
 
@@ -384,7 +383,7 @@ public class Search_SiteActions extends Search_Page {
 //        searchBoxClick.click();
 //        Thread.sleep(3000);
         searchAction(spellMistakeSingleWorld);
-        softAssert.assertEquals(awaitForElementPresence(didYouMean),"true","Spell error message is not getting displayed");
+        Assert.assertEquals(awaitForElementPresence(didYouMean),"true","Spell error message is not getting displayed");
         if(awaitForElementPresence(didYouMean)){System.out.println("Test Case 20: Pass: Spell error message (did you mean) is getting displayed.");}
         else{System.out.println("Test Case 20: Fail: Spell error message (did you mean) is not getting displayed.");}
 
@@ -401,12 +400,15 @@ public class Search_SiteActions extends Search_Page {
     }
 
     public void testDidYouMeanLinkIsWorkingOrNot() throws InterruptedException {
-        await();
+        searchAction( twoWordSpellMistake );
         spellCorrectWord.click();
         Thread.sleep(3000);
-        softAssert.assertEquals(searchResultQuery.getText(),threeWordQuery,"Did you mean click is not working");
-        if(searchResultQuery.getText().equals(threeWordQuery)){ System.out.println("Test Case 22: Pass: Did you mean link is working");}
-        else{System.out.println("Test Case 22: Fail: Did you mean link is not working");}
+        Response resp;
+        resp=given().get(spellErrorUrl+twoWordSpellMistake);
+        String spellCurrectSuggestion=resp.jsonPath().getString("didYouMean.suggestion").replace( "[","" ).replace( "]","" );
+        Assert.assertEquals(searchResultQuery.getText(),spellCurrectSuggestion,"Did you mean click is not working");
+//        if(searchResultQuery.getText().equals(threeWordQuery)){ System.out.println("Test Case 22: Pass: Did you mean link is working");}
+//        else{System.out.println("Test Case 22: Fail: Did you mean link is not working");}
 
 
     }
@@ -513,7 +515,7 @@ public class Search_SiteActions extends Search_Page {
         List<WebElement> allProductPrice=getDriver().findElements(By.xpath(UnbxdProductPrice));
 //        for (int i=0;i<allProductStrickenPrice.size();i++)
 //            System.out.println("Stricken price is present for product uniqueId: "+allProductPrice.get(i).getAttribute("data-uniqueid"));
-//      softAssert.assertEquals(allProductPrice.size(),allProductStrickenPrice.size());
+        Assert.assertEquals(allProductPrice.size(),allProductStrickenPrice.size());
         if(allProductPrice.size()==allProductStrickenPrice.size())
             System.out.println("Pass: For all product stricken price is present");
         else
@@ -684,7 +686,7 @@ public class Search_SiteActions extends Search_Page {
     public void searchBoxPlaceHolderIsDisplayOrNot() {
         await();
         awaitForPageToLoad();
-        softAssert.assertEquals(awaitForElementPresence(placeHolder),"true");
+        Assert.assertEquals(awaitForElementPresence(placeHolder),"true");
         System.out.println("Test Case 2: Pass: searchBox PlaceHolder is getting Display");
     }
 

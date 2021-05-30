@@ -103,7 +103,7 @@ public class searchPage_Test extends BaseTest {
     @Test(description = "testSearchedResultsMessageFormat", dataProvider = "getUrl")
     public void checkSearchedResultsMessageFormat(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testSearchedResultsMessageFormat();
+        search_SiteActions.testSearchedResultsMessageFormat(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
@@ -124,7 +124,7 @@ public class searchPage_Test extends BaseTest {
     @Test(description = "strickenPriceIsDisplayOrNot", dataProvider = "getUrl")
     public void checkStrickenPriceIsDisplayOrNot(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.strickenPriceIsDisplayOrNot();
+        search_SiteActions.strickenPriceIsDisplayOrNot(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
@@ -138,7 +138,7 @@ public class searchPage_Test extends BaseTest {
     @Test(description = "testListViewClick", dataProvider = "getUrl")
     public void checkListViewClick(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testListViewClick();
+        search_SiteActions.testListViewClick(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
@@ -152,7 +152,7 @@ public class searchPage_Test extends BaseTest {
     @Test(description = "testGridViewClick", dataProvider = "getUrl")
     public void checkGridViewClick(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testGridViewClick();
+        search_SiteActions.testGridViewClick(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
@@ -166,21 +166,21 @@ public class searchPage_Test extends BaseTest {
     @Test(description = "testFilterSelectionInCaseOfGridViewAndMoveToListViewPage", dataProvider = "getUrl")
     public void testFilterSelectionInCaseOfGridViewAndMoveToListViewPage(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testFilterSelectionInCaseOfGridViewAndMoveToListViewPage();
+        search_SiteActions.testFilterSelectionInCaseOfGridViewAndMoveToListViewPage(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
     @Test(description = "testFilterSelectionInCaseOfListViewAndMoveToGridViewPage", dataProvider = "getUrl")
     public void testFilterSelectionInCaseOfListViewAndMoveToGridViewPage(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testFilterSelectionInCaseOfListViewAndMoveToGridViewPage();
+        search_SiteActions.testFilterSelectionInCaseOfListViewAndMoveToGridViewPage(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
     @Test(description = "testNumberOfProductsOnGridViewAndListView", dataProvider = "getUrl")
     public void testNumberOfProductsOnGridViewAndListView(String url, String query) throws Exception {
         search_SiteActions.goToWebsite( url );
-        search_SiteActions.testNumberOfProductsOnGridViewAndListView();
+        search_SiteActions.testNumberOfProductsOnGridViewAndListView(query);
 
     }
     @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
@@ -356,7 +356,7 @@ public class searchPage_Test extends BaseTest {
        // search_SiteActions.checkColorSwitchIsWorkingOrNot(query);
 
     }
-
+//
 //    @FileToTest(value = "/frontEndTestData/SanitySearchUrl.json")
 //    @Test(description = "Search page functionality test ", dataProvider = "getUrl")
 //    public void SearchPageActions(String url, String query) throws Exception {
@@ -378,34 +378,34 @@ public class searchPage_Test extends BaseTest {
 //        search_SiteActions.testUIofListViewPage();
 //        search_SiteActions.testGridViewClick();
 //        search_SiteActions.testUIofGridViewPage();
-
+//
 //        search_SiteActions.testFilterSelectionInCaseOfGridViewAndMoveToListViewPage();
 //        search_SiteActions.testFilterSelectionInCaseOfListViewAndMoveToGridViewPage();
 //        search_SiteActions.testNumberOfProductsOnGridViewAndListView();
-
+//
 //        search_SiteActions.dontEnterQueryClickSearchIcon();
 //        search_SiteActions.dontEnterQueryPressEnterKey();
 //        search_SiteActions.testBlankSpaceInSearchedBox();
 //        search_SiteActions.searchUsingUniqueId();
-
+//
 //        search_SiteActions.testWhetherResultsAreDisplayingAsPerTheSearchedTerm_InTermsOfColor();
 //        search_SiteActions.testInvalidSearchQuery(search_SiteActions.invalidQuery);
 //        search_SiteActions.spellErrorMessageIsDisplayOrNot();
 //        search_SiteActions.singleWordSpellErrorIsWorking();
-
+//
 //        search_SiteActions.testWhetherTwoWordsSpellErrorIsWorking();
 //        search_SiteActions.testWhetherThreeWordsSpellErrorIsWorking();
 //        search_SiteActions.testDidYouMeanLinkIsWorkingOrNot();
 //        search_SiteActions.testWhetherAllTheUiElementsAreLoadedOrNot();
 //        search_SiteActions.checkProductAttributesAreDisplayingOrNot();
 //        search_SiteActions.testInCaseOfTwoPrices();
-
+//
 //        search_SiteActions.testWhetherPriceIsDisplayingInTwoDecimalFormatAllOverTheSite();
 //        search_SiteActions.checkTotalNumberOfProductsInSearchedResultsPageAndAPI();
 //        search_SiteActions.testWhetherInfiniteScrollIsWorkingOrNot();
 //        search_SiteActions.testDisplayingAllProductsInCaseOfInfiniteScroll();
 //
-
+//
 //    }
 
     private final String testFilePath = "target" + File.separator + "test-classes" + File.separator + "testData" + File.separator;

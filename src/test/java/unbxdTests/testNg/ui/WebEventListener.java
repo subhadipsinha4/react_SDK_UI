@@ -1,18 +1,22 @@
 package unbxdTests.testNg.ui;
 
+
+
 import core.ui.page.UiBase;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 public class WebEventListener extends BaseTest implements WebDriverEventListener {
 
     public void beforeNavigateTo(String url, WebDriver driver) {
         System.out.println("Before navigating to: '" + url + "'");
+
     }
 
     public void afterNavigateTo(String url, WebDriver driver) {
@@ -53,11 +57,17 @@ public class WebEventListener extends BaseTest implements WebDriverEventListener
 
     public void onException(Throwable error, WebDriver driver) {
         System.out.println("Exception occured: " + error);
-//        try {
-//            //takeScreenshotAtEndOfTest();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            WebEventListener.takeScreenshotAtEndOfTest(driver);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void takeScreenshotAtEndOfTest(WebDriver driver) throws IOException {
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String currentDir = System.getProperty("user.dir");
+        FileUtils.copyFile(scrFile, new File(currentDir + "/screenshots/" + System.currentTimeMillis() +".png"));
     }
 
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {

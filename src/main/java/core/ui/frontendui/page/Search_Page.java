@@ -16,7 +16,7 @@ public class Search_Page extends UiBase {
     public String unbxdSearchQuery="Jacket";
     @FindBy(xpath = "//button[@class='UNX-searchbox__button']")
     public FluentWebElement searchBoxClick;
-    @FindBy(xpath = "//span[@class='-query']")
+    @FindBy(xpath = "//div[@class='UNBXD-searchTitle__container']//span[@class='-query']")
     public FluentWebElement searchResultQuery;
     public String searchQuery="*";
     public String infiniteScrollSearchQuery="boot";

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SDK_1">
+
+    <listeners>
+        <listener class-name="core.reporting.ExtentTestNGITestListener" />
+    </listeners>
+    <test verbose="2" preserve-order="true" name="C:\SDK_1\src\test\java\unbxdTests\testNg\frontEndUi\searchPage_Test.java">
+        <classes>
+            <class name="unbxdTests.testNg.frontEndUi.searchPage_Test"/>
+        </classes>
+    </test>
+</suite>

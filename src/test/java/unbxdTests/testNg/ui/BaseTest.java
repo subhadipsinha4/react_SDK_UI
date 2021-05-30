@@ -33,7 +33,7 @@ public class BaseTest extends FluentAdapter {
             eventListener = new WebEventListener();
             e_driver.register(eventListener);
             driver = e_driver;
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
         catch(Exception e)
         {
